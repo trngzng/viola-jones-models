@@ -5,4 +5,4 @@ positiveInstances = objectDetectorTrainingData(gTruth);
 negativeImages = fullfile('../dataset/train-images/negative');
 
 trainCascadeObjectDetector('model.xml', positiveInstances, ...
-    negativeImages, 'FalseAlarmRate', 0.2, 'NumCascadeStages', 5);
+    negativeImages, 'FalseAlarmRate', 0.01, 'NumCascadeStages', 5);
