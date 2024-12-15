@@ -2,7 +2,7 @@ detector = vision.CascadeObjectDetector('model.xml');
 
 dir_test = fullfile('../dataset/test-images/positive');
 
-dir_save = fullfile('../dataset/test-images/ResultImage');
+dir_save = fullfile('../dataset/test-images/result-images');
 
 image_test = imageDatastore(dir_test);
 image_test_name = image_test.Files(:,1);
