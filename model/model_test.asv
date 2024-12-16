@@ -16,7 +16,7 @@ for ii = 1:nfiles
     
     detectedImg = insertObjectAnnotation(img, 'rectangle', bbox, 'No Turn Right Sign');
     
-    name = fullfile(dir_save, sprintf("test%02d.jpg", ii));
+    name = fullfile(dir_save, sprintf("test_%d.jpg", ii));
     
     imwrite(detectedImg, name, "Quality", 100);
 end
