@@ -1,24 +1,41 @@
 detector = vision.CascadeObjectDetector('model.xml');
 
-dir_test = fullfile('../dataset/test-images/positive');
+positiveImageTestDir = fullfile('../dataset/test-images/positive');
+negativeImageTestDir = fullfile('../dataset/test-images/negative');
 
-dir_save = fullfile('../dataset/test-images/result-images');
+outputTestDir = fullfile('../dataset/test-images/result-images');
 
-image_test = imageDatastore(dir_test);
-image_test_name = image_test.Files(:,1);
+positiveImageTest = imageDatastore(positiveImageTestDir);
+negativeImageTest = imageDatastore(negativeImageTestDir);
 
-nfiles = length(image_test_name);
+testIndex = 1;
 
-for ii = 1:nfiles
-    img = imread(string(image_test_name(ii,1)));
+for i = 1: length(positiveImageTest.Files(:, 1))
+    img = imread(string(positiveImageTest.Files(i,1)));
     
     bbox = step(detector, img);
     
     detectedImg = insertObjectAnnotation(img, 'rectangle', bbox, 'No Turn Right Sign');
     
-    name = fullfile(dir_save, sprintf("test%02d.jpg", ii));
+    name = fullfile(outputTestDir, sprintf("test%02d.jpg", testIndex));
     
     imwrite(detectedImg, name, "Quality", 100);
+
+    testIndex = testIndex + 1;
+end
+
+for i = 1: length(negativeImageTest.Files(:, 1))
+    img = imread(string(negativeImageTest.Files(i,1)));
+    
+    bbox = step(detector, img);
+    
+    detectedImg = insertObjectAnnotation(img, 'rectangle', bbox, 'No Turn Right Sign');
+    
+    name = fullfile(outputTestDir, sprintf("test%02d.jpg", testIndex));
+    
+    imwrite(detectedImg, name, "Quality", 100);
+
+    testIndex = testIndex + 1;
 end
 
 disp('Processing completed. Check the result-images folder for output images.');
